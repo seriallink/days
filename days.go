@@ -4,25 +4,25 @@ import (
 	"time"
 )
 
-// 比当前时间晚1个自然天的自然天的开始时间
-func Tomorrow(tm time.Time) (ret time.Time) {
-	return DaysAfter(tm, 1)
-}
-
-// 比当前时间早1个自然天的自然天的开始时间
-func Yesterday(tm time.Time) (ret time.Time) {
-	return DaysBefore(tm, 1)
-}
-
 func today(tm time.Time) (ret time.Time) {
 	_, offset := tm.Zone()
 	seconds := tm.Unix()
 	return time.Unix(seconds-(seconds+int64(offset))%86400, 0)
 }
 
-// 返回本自然天的开始时间
+// Returns today's time to midnight
 func Today() (ret time.Time) {
 	return today(time.Now())
+}
+
+// Returns tomorrow's time by adding one day to the given time
+func Tomorrow(tm time.Time) (ret time.Time) {
+	return Add(tm, 1)
+}
+
+// Returns tomorrow's time by subtracting one day from the given time
+func Yesterday(tm time.Time) (ret time.Time) {
+	return Sub(tm, 1)
 }
 
 func Days(tm time.Time) int {
@@ -30,25 +30,20 @@ func Days(tm time.Time) int {
 	return int((tm.Unix() + int64(offset)) / int64(86400))
 }
 
-// 两个时间之间的自然天差值
-func DaysBetween(t1, t2 time.Time) (days int) {
-	d1 := Days(t1)
-	d2 := Days(t2)
-	if d1 > d2 {
-		return d1 - d2
-	}
-	return d2 - d1
+// Calculates the difference between two times in days
+func Between(t1, t2 time.Time) (days int) {
+	return Days(t1) - Days(t2)
 }
 
-// N天以后的自然天的起始时间
-func DaysAfter(tm time.Time, n int) (ret time.Time) {
+// Adds "n" days to a given time
+func Add(tm time.Time, n int) (ret time.Time) {
 	t := today(tm)
 	return time.Unix(t.Unix()+int64(86400*n), 0)
 	//return t.Add(time.Duration(n) * time.Duration(86400) * time.Second)
 }
 
-// N天之前的自然天的起始时间
-func DaysBefore(tm time.Time, n int) (ret time.Time) {
+// Subtracts "n" days to a given time
+func Sub(tm time.Time, n int) (ret time.Time) {
 	t := today(tm)
 	return time.Unix(t.Unix()-int64(86400*n), 0)
 	//return t.Add(time.Duration(-n) * time.Duration(86400) * time.Second)

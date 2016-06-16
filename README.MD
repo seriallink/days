@@ -1,25 +1,25 @@
-# 计算自然日的工具集
-
-## Tomorrow(tm time.Time) time.Time
-
-返回明天00：00：00的时间
-
-## Yesterday(tm time.Time) time.Time
-
-返回昨天00:00:00的时间
+# Tool to calculate natural day set
 
 ## Today() time.Time
 
-返回今天00:00:00的时间
+Returns today's time to midnight
 
-## DaysBetween(t1, t2 time.Time) (days int)
+## Tomorrow(tm time.Time) time.Time
 
-计算两个时间t1, t2相差的自然天
+Returns tomorrow's time by adding one day to the given time
 
-## DaysAfter(tm time.Time, n int) time.Time
+## Yesterday(tm time.Time) time.Time
 
-计算距离tm以后n天的自然天的00:00:00的时间
+Returns tomorrow's time by subtracting one day from the given time
 
-## DaysBefore(tm time.Time, n int) time.Time
+## Between(t1, t2 time.Time) (days int)
 
-计算距离tm以前n天的自然天的00:00:00的时间
+Calculates the difference between two times in days
+
+## Add(tm time.Time, n int) time.Time
+
+Adds "n" days to a given time
+
+## Sub(tm time.Time, n int) time.Time
+
+Subtracts "n" days to a given time
