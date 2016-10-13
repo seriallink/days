@@ -4,7 +4,8 @@ import (
 	"time"
 )
 
-func today(tm time.Time) (ret time.Time) {
+// Returns date with the time portion of the day truncated
+func Trunc(tm time.Time) (ret time.Time) {
 	_, offset := tm.Zone()
 	seconds := tm.Unix()
 	return time.Unix(seconds-(seconds+int64(offset))%86400, 0)
@@ -12,7 +13,7 @@ func today(tm time.Time) (ret time.Time) {
 
 // Returns today's time to midnight
 func Today() (ret time.Time) {
-	return today(time.Now())
+	return Trunc(time.Now())
 }
 
 // Returns tomorrow's time by adding one day to the given time
@@ -37,14 +38,14 @@ func Between(t1, t2 time.Time) (days int) {
 
 // Adds "n" days to a given time
 func Add(tm time.Time, n int) (ret time.Time) {
-	t := today(tm)
+	t := Trunc(tm)
 	return time.Unix(t.Unix()+int64(86400*n), 0)
 	//return t.Add(time.Duration(n) * time.Duration(86400) * time.Second)
 }
 
 // Subtracts "n" days to a given time
 func Sub(tm time.Time, n int) (ret time.Time) {
-	t := today(tm)
+	t := Trunc(tm)
 	return time.Unix(t.Unix()-int64(86400*n), 0)
 	//return t.Add(time.Duration(-n) * time.Duration(86400) * time.Second)
 }
