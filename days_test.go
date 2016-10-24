@@ -118,14 +118,9 @@ var daysdelta = []struct {
 }
 
 func TestToday(t *testing.T) {
-	t0 := Today()
-	for _, tm := range tms {
-		if today(tm) != t0 {
-			t.Logf("today of %v is %v, but should be %v\n", tm, today(tm), t0)
-			t.Fail()
-		}
+	if Trunc(time.Now()) != Today() {
+		t.Fail()
 	}
-
 }
 
 func TestDays(t *testing.T) {
